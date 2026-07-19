@@ -38,6 +38,7 @@ async def run():
 
             # 调用 MCP server 的 get_weather 工具
             response = await session.call_tool("get_weather", arguments={})
+            # response-->meta=None content=[TextContent(type='text', text='北京的天气是多云', annotations=None, meta=None)] structuredContent={'result': '北京的天气是多云'} isError=False
             print(f"response-->{response}")
     return
 
