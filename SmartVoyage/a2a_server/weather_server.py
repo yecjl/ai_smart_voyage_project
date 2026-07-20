@@ -1,4 +1,16 @@
 """
+天气代理服务器，使用 LLM 生成 SQL 查询 MCP 天气工具，返回用户友好文本结果。
+作用：处理用户自然语言查询，转为 SQL 调用 MCP，提升智能性，支持追问和默认值。
+项目中的定位：执行层，接收路由任务，生成 SQL 调用 MCP，返回 artifacts 给客户端。
+核心功能：
+- 初始化 LLM 和 MCP 客户端。
+- 生成 SQL，提取代码块，调用 MCP。
+- 解析 JSON 结果，返回格式化文本。
+
+Author: danke
+Date: 2026/7/19 17:44
+"""
+"""
 需求：实现基于A2A的天气查询服务器，处理用户的天气查询请求并返回结果
 思路步骤：
 1. 导入必要的模块和库
@@ -11,9 +23,6 @@
 8. 实现generate_sql_query方法（生成SQL查询或追问）
 9. 实现handle_task方法（处理任务、生成SQL、调用MCP、格式化结果）
 10. 主函数（创建并运行服务器）
-
-Author: danke
-Date: 2026/7/19 17:44
 """
 import json
 import asyncio
@@ -245,20 +254,20 @@ if __name__ == "__main__":
     # 创建并运行服务器
     # 实例化天气查询服务器
     weather_server = WeatherQueryServer()
-    # # 打印服务器信息
-    # print("\n=== 服务器信息 ===")
-    # print(f"名称: {weather_server.agent_card.name}")
-    # print(f"描述: {weather_server.agent_card.description}")
-    # print("\n技能:")
-    # for skill in weather_server.agent_card.skills:
-    #     print(f"- {skill.name}: {skill.description}")
-    # # 运行服务器
-    # run_server(weather_server, host="127.0.0.1", port=5005)
+    # 打印服务器信息
+    print("\n=== 服务器信息 ===")
+    print(f"名称: {weather_server.agent_card.name}")
+    print(f"描述: {weather_server.agent_card.description}")
+    print("\n技能:")
+    for skill in weather_server.agent_card.skills:
+        print(f"- {skill.name}: {skill.description}")
+    # 运行服务器
+    run_server(weather_server, host="127.0.0.1", port=5005)
 
-    logger.info(weather_server.generate_sql_query('北京 2025-07-30'))
-    logger.info(weather_server.generate_sql_query('上海未来3天的天气'))
-    logger.info(weather_server.generate_sql_query('北京的天气'))
-    logger.info(weather_server.generate_sql_query('今天'))
-    logger.info(weather_server.generate_sql_query('北京'))
-    logger.info(weather_server.generate_sql_query('你好'))
-    logger.info(weather_server.generate_sql_query('今天有什么好吃的'))
+    # logger.info(weather_server.generate_sql_query('北京 2025-07-30'))
+    # logger.info(weather_server.generate_sql_query('上海未来3天的天气'))
+    # logger.info(weather_server.generate_sql_query('北京的天气'))
+    # logger.info(weather_server.generate_sql_query('今天'))
+    # logger.info(weather_server.generate_sql_query('北京'))
+    # logger.info(weather_server.generate_sql_query('你好'))
+    # logger.info(weather_server.generate_sql_query('今天有什么好吃的'))
